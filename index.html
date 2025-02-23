@@ -3,175 +3,605 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Engagement Workflow</title>
+    <title>KITS - Customer Engagement Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #ef4444;
+            --background-color: #f1f5f9;
+            --card-background: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --sidebar-width: 280px;
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
 
-        body {
-            font-family: 'Poppins', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #FFE8D6, #B7B7A4);
-            color: #6B705C;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
         }
-        .navbar {
-            background: #A5A58D;
-            padding: 15px;
-            text-align: center;
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-primary);
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            position: sticky;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            transition: background 0.3s;
+            min-height: 100vh;
         }
-        .navbar a {
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            position: fixed;
+            padding: 1.5rem 0;
+            color: white;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .logo-container {
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 0 1rem;
+        }
+
+        .nav-link {
+            padding: 0.875rem 1.25rem;
             color: white;
             text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            transition: all 0.3s;
-            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-radius: var(--border-radius);
+            transition: all var(--transition-speed);
         }
-        .navbar a:hover {
-            background: #6B705C;
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(4px);
         }
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 1s ease-in-out;
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            width: calc(100% - var(--sidebar-width));
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .card {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
         }
-        h1, h2 {
-            color: #6B705C;
-            text-align: center;
+
+        h1 {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
         }
-        .workflow {
-            margin: 20px 0;
-            padding: 20px;
-            border-radius: 10px;
-            background: #DDC6A9;
+
+        h2 {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .btn {
+            background: var(--primary-color);
             color: white;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        .workflow:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-        button {
-            padding: 12px 20px;
-            margin: 10px;
+            padding: 0.75rem 1.5rem;
             border: none;
-            background: #6B705C;
-            color: white;
+            border-radius: var(--border-radius);
             cursor: pointer;
-            border-radius: 5px;
-            transition: background 0.3s, transform 0.2s;
-            font-weight: bold;
+            transition: background-color var(--transition-speed);
         }
-        button:hover {
-            background: #CB997E;
-            transform: scale(1.05);
+ .case-id {
+            background: #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: inline-block;
         }
-        .hidden {
-            display: none;
+
+        .complaint-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-left: 1rem;
         }
-        input, select {
-            padding: 10px;
-            margin: 10px 0;
-            width: 90%;
-            border: 1px solid #A5A58D;
-            border-radius: 5px;
-            transition: all 0.3s;
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
         }
-        input:focus, select:focus {
-            border-color: #6B705C;
-            outline: none;
-            transform: scale(1.02);
+
+        .status-processing {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-resolved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .complaint-actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .status-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .status-btn-processing {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .status-btn-resolved {
+            background: #22c55e;
+            color: white;
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .submissions-list {
+            margin-top: 2rem;
+        }
+
+        .submission-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .submission-item p {
+            margin: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .submission-item strong {
+            color: var(--text-primary);
+        }
+
+        .delete-btn {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
         }
     </style>
-    <script>
-        function showSection(id) {
-            document.querySelectorAll('.workflow').forEach(section => {
-                section.classList.add('hidden');
-            });
-            document.getElementById(id).classList.remove('hidden');
-        }
-    </script>
 </head>
 <body>
-    <div class="navbar">
-        <a href="#" onclick="showSection('enrollment')">Enrollment</a>
-        <a href="#" onclick="showSection('claims')">Claims</a>
-        <a href="#" onclick="showSection('credentialing')">Credentialing</a>
-        <a href="#" onclick="showSection('authorization')">Service Authorization</a>
-        <a href="#" onclick="showSection('grievance')">Grievance</a>
-    </div>
-    <div class="container">
-        <h1>Automated Citizen Services</h1>
-        <p>Enhancing efficiency through streamlined workflows.</p>
-
-        <div class="workflow" id="enrollment">
-            <h2>Citizen Enrollment & Eligibility Verification</h2>
-            <input type="text" placeholder="Full Name" required>
-            <input type="email" placeholder="Email Address" required>
-            <input type="date" required>
-            <button onclick="showSection('enrollment-status')">Submit</button>
-            <p id="enrollment-status"></p>
+    <nav class="sidebar">
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-city"></i>
+                COMPLAINT WEB APP
+            </div>
         </div>
+        <div class="nav-links" id="navLinks"></div>
+    </nav>
 
-        <div class="workflow hidden" id="claims">
-            <h2>Benefit Claims Processing</h2>
-            <input type="text" placeholder="Citizen Name" required>
-            <select>
-                <option>Healthcare</option>
-                <option>Financial Aid</option>
-            </select>
-            <input type="text" placeholder="Claim Reason" required>
-            <button onclick="showSection('claims-status')">Submit</button>
-            <p id="claims-status"></p>
-        </div>
+    <main class="main-content" id="mainContent"></main>
 
-        <div class="workflow hidden" id="credentialing">
-            <h2>Healthcare Provider Credentialing & Contracting</h2>
-            <input type="text" placeholder="Provider Name" required>
-            <input type="text" placeholder="License Number" required>
-            <select>
-                <option>Doctor</option>
-                <option>Nurse</option>
-                <option>Specialist</option>
-            </select>
-            <button onclick="showSection('credentialing-status')">Submit</button>
-            <p id="credentialing-status"></p>
+<script>
+const pageTemplates = {
+    citizenEngagement: `
+        <h1>Citizen Engagement</h1>
+        <div class="card">
+            <h2>New Inquiry</h2>
+            <form onsubmit="handleSubmit(event, 'citizenEngagement')">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Citizen Name</label>
+                        <input type="text" class="form-control" name="citizenName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" rows="4" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Submit Inquiry</button>
+            </form>
         </div>
+        <div class="submissions-list" id="citizenEngagementSubmissions"></div>
+    `,
+    complaintResolution: `
+        <h1>Complaint Resolution</h1>
+        <div class="card">
+            <h2>File Complaint</h2>
+            <form onsubmit="handleComplaintSubmit(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contact Number</label>
+                        <input type="tel" class="form-control" name="contactNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Service Type</label>
+                        <select class="form-control" name="serviceType" required>
+                            <option value="">Select Service</option>
+                            <option value="bus">Bus Service</option>
+                            <option value="metro">Metro</option>
+                            <option value="road">Road Maintenance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Complaint Details</label>
+                        <textarea class="form-control" name="details" rows="4" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Submit Complaint</button>
+            </form>
+        </div>
+        <div class="submissions-list" id="complaintResolutionSubmissions"></div>
+    `,
+    permitProcessing: `
+        <h1>Permit Processing</h1>
+        <div class="card">
+            <h2>New Permit Request</h2>
+            <form onsubmit="handleSubmit(event, 'permitProcessing')">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Permit Type</label>
+                        <select class="form-control" name="permitType" required>
+                            <option value="">Select Type</option>
+                            <option value="transportation">Transportation</option>
+                            <option value="parking">Parking</option>
+                            <option value="construction">Construction</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Applicant Details</label>
+                        <input type="text" class="form-control" name="applicantName" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Submit Request</button>
+            </form>
+        </div>
+        <div class="submissions-list" id="permitProcessingSubmissions"></div>
+    `,
+    incidentManagement: `
+        <h1>Incident Management</h1>
+        <div class="card">
+            <h2>Report Incident</h2>
+            <form onsubmit="handleSubmit(event, 'incidentManagement')">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <input type="text" class="form-control" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Incident Description</label>
+                        <textarea class="form-control" name="description" rows="4" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Report Incident</button>
+            </form>
+        </div>
+        <div class="submissions-list" id="incidentManagementSubmissions"></div>
+    `,
+    accessibilityServices: `
+        <h1>Accessibility Services</h1>
+        <div class="card">
+            <h2>Request Service</h2>
+            <form onsubmit="handleSubmit(event, 'accessibilityServices')">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Service Type</label>
+                        <select class="form-control" name="serviceType" required>
+                            <option value="">Select Service</option>
+                            <option value="wheelchair">Wheelchair Access</option>
+                            <option value="assistance">Personal Assistance</option>
+                            <option value="transport">Special Transport</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Special Requirements</label>
+                        <textarea class="form-control" name="requirements" rows="4" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Submit Request</button>
+            </form>
+        </div>
+        <div class="submissions-list" id="accessibilityServicesSubmissions"></div>
+    `
+};
 
-        <div class="workflow hidden" id="authorization">
-            <h2>Healthcare Service Authorization & Utilization Review</h2>
-            <input type="text" placeholder="Patient Name" required>
-            <input type="text" placeholder="Medical Condition" required>
-            <input type="text" placeholder="Requested Service" required>
-            <button onclick="showSection('authorization-status')">Submit</button>
-            <p id="authorization-status"></p>
-        </div>
+const navItems = [
+    { id: 'citizenEngagement', icon: 'fas fa-users', text: 'Citizen Engagement' },
+    { id: 'complaintResolution', icon: 'fas fa-exclamation-circle', text: 'Complaint Resolution' },
+    { id: 'permitProcessing', icon: 'fas fa-file-alt', text: 'Permit Processing' },
+    { id: 'incidentManagement', icon: 'fas fa-exclamation-triangle', text: 'Incident Management' },
+    { id: 'accessibilityServices', icon: 'fas fa-universal-access', text: 'Accessibility Services' }
+];
 
-        <div class="workflow hidden" id="grievance">
-            <h2>Citizen Grievance & Appeals Management</h2>
-            <input type="text" placeholder="Citizen Name" required>
-            <input type="text" placeholder="Grievance Details" required>
-            <button onclick="showSection('grievance-status')">Submit</button>
-            <p id="grievance-status"></p>
-        </div>
-    </div>
+// Initialize data storage
+let submissionsData = JSON.parse(localStorage.getItem('kitsPortalData')) || {
+    citizenEngagement: [],
+    complaintResolution: [],
+    permitProcessing: [],
+    incidentManagement: [],
+    accessibilityServices: []
+};
+
+// Generate unique case ID
+function generateCaseId() {
+    const date = new Date();
+    const year = date.getFullYear().toString().slice(-2);
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+    return `COMP-${year}${month}${day}-${random}`;
+}
+
+function initializeNavigation() {
+    const navLinks = document.getElementById('navLinks');
+    navItems.forEach(item => {
+        const link = document.createElement('a');
+        link.href = '#';
+        link.className = 'nav-link';
+        link.innerHTML = `<i class="${item.icon}"></i>${item.text}`;
+        link.onclick = () => loadPage(item.id);
+        navLinks.appendChild(link);
+    });
+}
+
+function loadPage(pageId) {
+    const mainContent = document.getElementById('mainContent');
+    mainContent.innerHTML = pageTemplates[pageId] || '<h1>Page not found</h1>';
+    
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.textContent.includes(navItems.find(item => item.id === pageId)?.text)) {
+            link.classList.add('active');
+        }
+    });
+
+    // Display existing submissions
+    displaySubmissions(pageId);
+}
+
+function handleSubmit(event, formType) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const submission = {
+        id: Date.now(),
+        timestamp: new Date().toLocaleString(),
+        ...Object.fromEntries(formData.entries())
+    };
+
+    // Add submission to storage
+    submissionsData[formType].push(submission);
+    localStorage.setItem('kitsPortalData', JSON.stringify(submissionsData));
+
+    // Update display
+    displaySubmissions(formType);
+    
+    event.target.reset();
+    alert(`${formType.split(/(?=[A-Z])/).join(' ')} submitted successfully!`);
+}
+
+function handleComplaintSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const submission = {
+        id: Date.now(),
+        caseId: generateCaseId(),
+        timestamp: new Date().toLocaleString(),
+        status: 'pending',
+        ...Object.fromEntries(formData.entries())
+    };
+
+    // Add submission to storage
+    submissionsData.complaintResolution.push(submission);
+    localStorage.setItem('kitsPortalData', JSON.stringify(submissionsData));
+
+    // Update display
+    displayComplaintSubmissions();
+    
+    event.target.reset();
+    alert(`Complaint submitted successfully!\nCase ID: ${submission.caseId}`);
+}
+
+function updateComplaintStatus(caseId, newStatus) {
+    const complaintIndex = submissionsData.complaintResolution.findIndex(
+        complaint => complaint.caseId === caseId
+    );
+
+    if (complaintIndex !== -1) {
+        submissionsData.complaintResolution[complaintIndex].status = newStatus;
+        localStorage.setItem('kitsPortalData', JSON.stringify(submissionsData));
+        displayComplaintSubmissions();
+    }
+}
+
+function displayComplaintSubmissions() {
+    const submissionsList = document.getElementById('complaintResolutionSubmissions');
+    if (!submissionsList) return;
+
+    const submissions = submissionsData.complaintResolution;
+    submissionsList.innerHTML = `
+        <h2>Previous Complaints</h2>
+        ${submissions.length === 0 ? '<p>No complaints submitted yet</p>' : ''}
+        ${submissions.map(submission => `
+            <div class="submission-item">
+                <div class="case-id">
+                    ${submission.caseId}
+                    <span class="complaint-status status-${submission.status}">
+                        ${submission.status.charAt(0).toUpperCase() + submission.status.slice(1)}
+                    </span>
+                </div>
+                <p><strong>Submitted:</strong> ${submission.timestamp}</p>
+                <p><strong>Name:</strong> ${submission.name}</p>
+                <p><strong>Contact:</strong> ${submission.contactNumber}</p>
+                <p><strong>Email:</strong> ${submission.email}</p>
+                <p><strong>Service Type:</strong> ${submission.serviceType}</p>
+                <p><strong>Details:</strong> ${submission.details}</p>
+                
+                <div class="complaint-actions">
+                    ${submission.status === 'pending' ? `
+                        <button class="status-btn status-btn-processing" 
+                            onclick="updateComplaintStatus('${submission.caseId}', 'processing')">
+                            Mark as Processing
+                        </button>
+                    ` : ''}
+                    ${submission.status === 'processing' ? `
+                        <button class="status-btn status-btn-resolved" 
+                            onclick="updateComplaintStatus('${submission.caseId}', 'resolved')">
+                            Mark as Resolved
+                        </button>
+                    ` : ''}
+                    <button class="delete-btn" onclick="deleteSubmission('complaintResolution', ${submission.id})">
+                        Delete Complaint
+                    </button>
+                </div>
+            </div>
+        `).join('')}
+    `;
+}
+
+function displaySubmissions(formType) {
+    if (formType === 'complaintResolution') {
+        displayComplaintSubmissions();
+        return;
+    }
+
+    const submissionsList = document.getElementById(`${formType}Submissions`);
+    if (!submissionsList) return;
+
+    const submissions = submissionsData[formType];
+    submissionsList.innerHTML = `
+        <h2>Previous Submissions</h2>
+        ${submissions.length === 0 ? '<p>No submissions yet</p>' : ''}
+        ${submissions.map(submission => `
+            <div class="submission-item">
+                <p><strong>Submitted:</strong> ${submission.timestamp}</p>
+                ${Object.entries(submission)
+                    .filter(([key]) => !['id', 'timestamp'].includes(key))
+                    .map(([key, value]) => `
+                        <p><strong>${key.split(/(?=[A-Z])/).join(' ')}:</strong> ${value}</p>
+                    `).join('')}
+                <button class="delete-btn" onclick="deleteSubmission('${formType}', ${submission.id})">
+                    Delete Submission
+                </button>
+            </div>
+        `).join('')}
+    `;
+}
+
+function deleteSubmission(formType, submissionId) {
+    // Remove submission from storage
+    submissionsData[formType] = submissionsData[formType].filter(
+        submission => submission.id !== submissionId
+    );
+    
+    // Update localStorage
+    localStorage.setItem('kitsPortalData', JSON.stringify(submissionsData));
+    
+    // Refresh display
+    displaySubmissions(formType);
+    
+    alert('Submission deleted successfully!');
+}
+
+// Add event listener for clearing storage (optional, for testing)
+function clearAllData() {
+    localStorage.removeItem('kitsPortalData');
+    submissionsData = {
+        citizenEngagement: [],
+        complaintResolution: [],
+        permitProcessing: [],
+        incidentManagement: [],
+        accessibilityServices: []
+    };
+    loadPage(currentPage);
+}
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', () => {
+    initializeNavigation();
+    loadPage('citizenEngagement');
+});
+</script>s
 </body>
 </html>
